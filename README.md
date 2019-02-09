@@ -1,6 +1,6 @@
 # Docker-based Drupal stack
 
-[![Build Status](https://travis-ci.org/wodby/docker4drupal.svg?branch=master)](https://travis-ci.org/wodby/docker4drupal)
+[![Build Status](https://travis-ci.org/FabbDev/smg-wodby.svg?branch=master)](https://travis-ci.org/FabbDev/smg-wodby)
 
 ## Introduction
 
