@@ -11,4 +11,4 @@ env:
 
 script:
   - set -e
-  - make test
+  - make -f environment.mk test
