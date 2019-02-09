@@ -22,3 +22,17 @@ services:
       - $CODEBASE:/var/www/html
       - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
       - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
+
+  solr:
+    image: wodby/solr:$SOLR_TAG
+    container_name: "${PROJECT_NAME}_solr"
+    environment:
+      SOLR_DEFAULT_CONFIG_SET: $SOLR_CONFIG_SET
+      SOLR_HEAP: 1024m
+      SOLR_CORES: $SOLR_CORES
+    volumes:
+      - ./files/init_solr.sh:/docker-entrypoint-initdb.d/10-init.sh
+    labels:
+      - 'traefik.backend=${PROJECT_NAME}_solr'
+      - 'traefik.port=8983'
+      - 'traefik.frontend.rule=Host:solr.${PROJECT_BASE_URL}'

@@ -4,7 +4,9 @@
 
 ## Usage
 
-1. Set the environment variable `CODEBASE` to the path of the project root.
+1. Set up the necessary environment variables:
+   - `CODEBASE`: the path to the codebase;
+   - `SOLR_CORES`: a colon-delimited list of SOLR cores to ensure exist.
 1. Run `make up` to start the environment.
 1. Run `make build` to build the codebase.
 
