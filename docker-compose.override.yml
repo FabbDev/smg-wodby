@@ -23,6 +23,22 @@ services:
       - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
       - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
 
+  node:
+    image: wodby/node:$NODE_TAG
+    container_name: "${PROJECT_NAME}_node"
+    working_dir: /var/www/html/docroot/themes/smg
+    labels:
+      - 'traefik.backend=${PROJECT_NAME}_node'
+      - 'traefik.port=3000'
+      - 'traefik.frontend.rule=Host:front.${PROJECT_BASE_URL}'
+    expose:
+      - "3000"
+    volumes:
+      - $CODEBASE:/var/www/html
+      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
+      - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
+    command: sh -c 'npm install && npx gulp dev'
+
   solr:
     image: wodby/solr:$SOLR_TAG
     container_name: "${PROJECT_NAME}_solr"
@@ -36,3 +52,7 @@ services:
       - 'traefik.backend=${PROJECT_NAME}_solr'
       - 'traefik.port=8983'
       - 'traefik.frontend.rule=Host:solr.${PROJECT_BASE_URL}'
+
+  traefik:
+    ports:
+      - '80:80'

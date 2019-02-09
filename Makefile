@@ -37,7 +37,7 @@ build:
 	@docker-compose exec php composer install
 
 site-install:
-	@docker-compose exec --user www-data php drush -y si --account-pass=admin
+	@docker-compose exec --user www-data php drush -y si --account-pass=admin --config-dir=../config numiko_media
 
 # https://stackoverflow.com/a/6273809/1826109
 %:
