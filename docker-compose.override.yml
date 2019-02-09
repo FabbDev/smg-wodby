@@ -4,13 +4,21 @@ services:
   php:
     image: wodby/drupal:$DRUPAL_TAG
     environment:
+      ENVIRONMENT: docker
+      DOCROOT_SUBDIR: docroot
+      DRUPAL_SITE: default
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
-      - codebase:/var/www/html
+      - $CODEBASE:/var/www/html
+      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
+      - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
+      - ./files/init_drupal.sh:/usr/local/bin/init_drupal
+      - ./files/entrypoint-drupal.sh:/docker-entrypoint-init.d/20-drupal.sh
 
   nginx:
+    environment:
+      NGINX_SERVER_ROOT: /var/www/html/docroot
     volumes:
-      - codebase:/var/www/html
-
-volumes:
-  codebase:
+      - $CODEBASE:/var/www/html
+      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
+      - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php

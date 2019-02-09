@@ -33,6 +33,12 @@ drush:
 logs:
 	@docker-compose logs -f $(filter-out $@,$(MAKECMDGOALS))
 
+build:
+	@docker-compose exec php composer install
+
+site-install:
+	@docker-compose exec --user www-data php drush -y si --account-pass=admin
+
 # https://stackoverflow.com/a/6273809/1826109
 %:
 	@:
