@@ -1,5 +1,3 @@
-include docker.mk
-
 .PHONY: test
 
 DRUPAL_VER ?= 8
