@@ -6,7 +6,7 @@ default: up
 
 APP_ROOT ?= /var/www/html
 DRUPAL_ROOT ?= $(APP_ROOT)/docroot
-DRUPAL_SITE_DIR ?= $(APP_ROOT)/sites/default
+DRUPAL_SITE_DIR ?= $(DRUPAL_ROOT)/sites/default
 SMG_THEME ?= $(DRUPAL_ROOT)/themes/smg
 
 up:
