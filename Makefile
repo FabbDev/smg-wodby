@@ -4,7 +4,10 @@ include .env
 
 default: up
 
-DRUPAL_ROOT ?= /var/www/html/web
+APP_ROOT ?= /var/www/html
+DRUPAL_ROOT ?= $(APP_ROOT)/docroot
+DRUPAL_SITE_DIR ?= $(DRUPAL_ROOT)/sites/default
+SMG_THEME ?= $(DRUPAL_ROOT)/themes/smg
 
 up:
 	@echo "Starting up containers for $(PROJECT_NAME)..."
@@ -37,7 +40,9 @@ build:
 	@docker-compose exec php composer install
 
 site-install:
-	@docker-compose exec --user www-data php drush -y si --account-pass=admin --config-dir=../config numiko_media
+#	@docker-compose exec --user www-data php drush -y si --account-pass=admin --config-dir=../config numiko_media
+	@docker-compose exec php bash -c "chmod +w $(DRUPAL_ROOT)/sites/default $(DRUPAL_ROOT)/sites/default/settings.php"
+	@time docker-compose exec php drush site-install --verbose config_installer config_installer_sync_configure_form.sync_directory=$(APP_ROOT)/config --yes
 
 # https://stackoverflow.com/a/6273809/1826109
 %:
