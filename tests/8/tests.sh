@@ -32,7 +32,7 @@ composer require \
 
 cd ./web
 
-drush si -y --db-url="${DB_URL}"
+drush si -vvv -y --db-url="${DB_URL}"
 
 # Test Drupal status and requirements
 check_status "drush-version" "9.*"
