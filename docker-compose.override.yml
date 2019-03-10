@@ -26,7 +26,7 @@ services:
       - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
       - files:/mnt/files
     labels:
-      - 'traefik.frontend.rule=Host:sci.smg.test,media.smg.test,industry.smg.test,nrm.smg.test,locomotion.smg.test'
+      - 'traefik.frontend.rule=Host:sci.${PROJECT_BASE_URL},media.${PROJECT_BASE_URL},industry.${PROJECT_BASE_URL},nrm.${PROJECT_BASE_URL},locomotion.${PROJECT_BASE_URL}'
 
   node:
     image: wodby/node:$NODE_TAG
