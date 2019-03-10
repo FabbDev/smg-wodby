@@ -25,6 +25,8 @@ services:
       - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
       - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
       - files:/mnt/files
+    labels:
+      - 'traefik.frontend.rule=Host:sci.smg.test,media.smg.test,industry.smg.test,nrm.smg.test,locomotion.smg.test'
 
   node:
     image: wodby/node:$NODE_TAG
