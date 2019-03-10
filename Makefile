@@ -67,9 +67,10 @@ clean:
 
 site-install:
 	@docker-compose exec php bash -c "chmod +w $(DRUPAL_ROOT)/sites/default $(DRUPAL_ROOT)/sites/default/settings.php"
-	@time docker-compose exec php \
-		drush site-install --verbose --account-pass=admin --yes \
-			config_installer config_installer_sync_configure_form.sync_directory=$(APP_ROOT)/config
+	@docker-compose exec php sh -c \
+		"drush site-install --verbose --account-pass=admin --yes \
+			config_installer config_installer_sync_configure_form.sync_directory=$(APP_ROOT)/config && \
+		drush config-import --yes"
 
 # https://stackoverflow.com/a/6273809/1826109
 %:
