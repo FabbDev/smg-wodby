@@ -1,6 +1,6 @@
 include .env
 
-.PHONY: up down stop prune ps shell drush logs build clean site-install
+.PHONY: up down stop prune ps shell drush logs build clean site-install build build-fe build-fe
 
 default: up
 
@@ -39,7 +39,12 @@ drush:
 logs:
 	@docker-compose logs -f $(filter-out $@,$(MAKECMDGOALS))
 
-build:
+build: build-fe build-be
+
+build-fe:
+	@docker-compose exec node sh -c 'npm install && npx gulp'
+
+build-be:
 	@docker-compose exec php composer install
 
 # It feels a little silly using docker to kill files (and weird to use the php
