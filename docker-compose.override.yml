@@ -8,6 +8,7 @@ services:
       DOCROOT_SUBDIR: docroot
       DRUPAL_SITE: default
       PHP_FPM_CLEAR_ENV: "no"
+      PROJECT_BASE_URL: ${PROJECT_BASE_URL}
     volumes:
       - $CODEBASE:/var/www/html
       - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
