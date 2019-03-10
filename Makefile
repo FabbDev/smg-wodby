@@ -40,9 +40,10 @@ build:
 	@docker-compose exec php composer install
 
 site-install:
-#	@docker-compose exec --user www-data php drush -y si --account-pass=admin --config-dir=../config numiko_media
 	@docker-compose exec php bash -c "chmod +w $(DRUPAL_ROOT)/sites/default $(DRUPAL_ROOT)/sites/default/settings.php"
-	@time docker-compose exec php drush site-install --verbose config_installer config_installer_sync_configure_form.sync_directory=$(APP_ROOT)/config --yes
+	@time docker-compose exec php \
+		drush site-install --verbose --account-pass=admin --yes \
+			config_installer config_installer_sync_configure_form.sync_directory=$(APP_ROOT)/config
 
 # https://stackoverflow.com/a/6273809/1826109
 %:
