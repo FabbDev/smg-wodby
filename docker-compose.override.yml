@@ -4,13 +4,61 @@ services:
   php:
     image: wodby/drupal:$DRUPAL_TAG
     environment:
+      ENVIRONMENT: docker
+      DOCROOT_SUBDIR: docroot
+      DRUPAL_SITE: default
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
-      - codebase:/var/www/html
+      - $CODEBASE:/var/www/html
+      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
+      - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
+      - ./files/init_drupal.sh:/usr/local/bin/init_drupal
+      - ./files/entrypoint-drupal.sh:/docker-entrypoint-init.d/20-drupal.sh
+      - files:/mnt/files
 
   nginx:
+    environment:
+      NGINX_SERVER_ROOT: /var/www/html/docroot
     volumes:
-      - codebase:/var/www/html
+      - $CODEBASE:/var/www/html
+      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
+      - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
+      - files:/mnt/files
+
+  node:
+    image: wodby/node:$NODE_TAG
+    container_name: "${PROJECT_NAME}_node"
+    working_dir: /var/www/html/docroot/themes/smg
+    labels:
+      - 'traefik.backend=${PROJECT_NAME}_node'
+      - 'traefik.port=3000'
+      - 'traefik.frontend.rule=Host:front.${PROJECT_BASE_URL}'
+    expose:
+      - "3000"
+    volumes:
+      - $CODEBASE:/var/www/html
+      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
+      - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
+    command: sh -c 'npm install && npx gulp dev'
+
+  solr:
+    image: wodby/solr:$SOLR_TAG
+    container_name: "${PROJECT_NAME}_solr"
+    environment:
+      SOLR_DEFAULT_CONFIG_SET: $SOLR_CONFIG_SET
+      SOLR_HEAP: 1024m
+      SOLR_CORES: $SOLR_CORES
+    volumes:
+      - ./files/init_solr.sh:/docker-entrypoint-initdb.d/10-init.sh
+
+    labels:
+      - 'traefik.backend=${PROJECT_NAME}_solr'
+      - 'traefik.port=8983'
+      - 'traefik.frontend.rule=Host:solr.${PROJECT_BASE_URL}'
+
+  traefik:
+    ports:
+      - '80:80'
 
 volumes:
-  codebase:
+  files:

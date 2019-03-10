@@ -2,6 +2,14 @@
 
 [![Build Status](https://travis-ci.org/FabbDev/smg-wodby.svg?branch=master)](https://travis-ci.org/FabbDev/smg-wodby)
 
+## Usage
+
+1. Set up the necessary environment variables:
+   - `CODEBASE`: the path to the codebase;
+   - `SOLR_CORES`: a colon-delimited list of SOLR cores to ensure exist.
+1. Run `make up` to start the environment.
+1. Run `make build` to build the codebase.
+
 ## Introduction
 
 Docker4Drupal is a set of docker images optimized for Drupal. Use `docker-compose.yml` file from the [latest stable release](https://github.com/wodby/docker4drupal/releases) to spin up local environment on Linux, Mac OS X and Windows. 
