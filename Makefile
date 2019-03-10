@@ -1,6 +1,7 @@
 include .env
 
-.PHONY: up down stop prune ps shell drush logs build clean site-install build build-fe build-fe
+.PHONY: up down stop prune ps shell drush logs build clean site-install build build-fe build-fe build-fe-install
+.PHONY: build-fe-generate
 
 default: up
 
@@ -41,8 +42,13 @@ logs:
 
 build: build-fe build-be
 
-build-fe:
-	@docker-compose exec node sh -c 'npm install && npx gulp'
+build-fe: build-fe-install build-fe-generate
+
+build-fe-install:
+	@docker-compose exec node npm install
+
+build-fe-generate:
+	@docker-compose exec node npx gulp
 
 build-be:
 	@docker-compose exec php composer install
