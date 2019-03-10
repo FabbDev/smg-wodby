@@ -40,7 +40,7 @@ services:
       - $CODEBASE:/var/www/html
       - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
       - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
-    command: sh -c 'npm install && npx gulp dev'
+    command: /bin/true
 
   solr:
     image: wodby/solr:$SOLR_TAG
