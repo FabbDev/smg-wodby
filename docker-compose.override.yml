@@ -2,7 +2,7 @@ version: "3"
 
 services:
   php:
-    image: wodby/drupal:$DRUPAL_TAG
+    image: wodby/drupal-php:$PHP_TAG
     environment:
       ENVIRONMENT: docker
       DOCROOT_SUBDIR: docroot
