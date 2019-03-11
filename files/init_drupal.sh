@@ -18,7 +18,7 @@ if [[ ! -f "${settings_php}" ]]; then
     echo -e "<?php\n\n" > "${settings_php}"
 fi
 
-if [[ $( grep -ic "wodby.settings.php" "${settings_php}" ) -eq 0 ]]; then
+if [[ $( grep -ic "settings.docker.php" "${settings_php}" ) -eq 0 ]]; then
     chmod 644 "${settings_php}"
     cat <<'EOS' >> "$settings_php"
 

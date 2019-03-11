@@ -11,7 +11,6 @@ services:
       PROJECT_BASE_URL: ${PROJECT_BASE_URL}
     volumes:
       - $CODEBASE:/var/www/html
-      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
       - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
       - ./files/init_drupal.sh:/usr/local/bin/init_drupal
       - ./files/entrypoint-drupal.sh:/docker-entrypoint-init.d/20-drupal.sh
@@ -22,7 +21,6 @@ services:
       NGINX_SERVER_ROOT: /var/www/html/docroot
     volumes:
       - $CODEBASE:/var/www/html
-      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
       - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
       - files:/mnt/files
     labels:
@@ -40,7 +38,6 @@ services:
       - "3000"
     volumes:
       - $CODEBASE:/var/www/html
-      - ./files/settings.docker.php:/var/www/html/docroot/sites/default/settings.docker.php
       - ./files/drushrc.php:/var/www/html/docroot/sites/default/drushrc.php
     command: /bin/true
 
