@@ -45,10 +45,10 @@ build: build-fe build-be
 build-fe: build-fe-install build-fe-generate
 
 build-fe-install:
-	@docker-compose exec node npm install
+	@docker-compose run node npm install
 
 build-fe-generate:
-	@docker-compose exec node npx gulp
+	@docker-compose run node npx gulp
 
 build-be:
 	@docker-compose exec php composer install
